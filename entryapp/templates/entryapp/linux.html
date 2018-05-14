@@ -1,0 +1,84 @@
+{% extends "entryapp/base.html" %} {% load staticfiles %}
+{% block body_block %} 
+    <h4>Launching Django application on Ubuntu VM</h4>
+    <ol>
+        <li>Install required packages</li>
+        <ul>
+            <li>
+                OpenSSH server<br>
+                <code>$ sudo apt-get install openssh-server</code>
+            </li>
+            <li>
+                Git<br>
+                <code>$ sudo apt-get install git</code>
+            </li>
+            <li>
+                Nginx<br>
+                <code>$ sudo apt-get install nginx</code>
+            </li>
+            <li>Python Header Files - to compile binding libraries<br>
+                <code>$ sudo apt-get install python2.7-dev</code>
+            </li>
+            <li>
+                PostgreSQL<br>
+                To use postgresql apt repository:<br>
+                <ul>
+                    <li>
+                    Create file /etc/apt/sources.list.d/pgdg.list, and add this line:<br>
+                    <code>deb http://apt.postgresql.org/pub/repos/apt/ 16.04-pgdg main</code><br>
+                    Where "16.04" is Ubuntu server version
+                    </li>
+                    <li>
+                        Import the repository signing key, and update the package lists<br>
+                        <code>$ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -</code><br>
+                        <code>$ sudo apt-get update</code>
+                    </li>
+                </ul>
+                Install PostgreSQL<br>
+                <code>$ sudo apt-get install postgresql-9.5 postgresql-server-dev-9.5</code><br>
+                Make your Ubuntu user a PostgreSQL superuser, change default postgres user password<br>
+                <code>$ sudo su - postgres</code><br>
+                <code>$ createuser --superuser USERNAME</code><br>
+                Go to psql shell to change postgres user password<br>
+                <code>$ psql</code><br>
+                <code># \password postgres</code>
+            </li>
+        </ul>
+        <li>
+            Install Example site
+        </li>
+        <ul>
+            <li>Setup a generic user for deployments</li>
+            For multiple users to be able to do deployments, create a new user<br>
+            <code>$ sudo useradd -d /home/deploy -m -s /bin/bash deploy</code>
+            <li>Setup virtualenv</li>
+            <code>$ sudo apt-get install python-setuptools<br>
+                    $ sudo easy_install pip virtualenv<br>
+                    $ cd /usr/local/<br>
+                    $ sudo mkdir virtualenvs<br>
+                    $ sudo chown deploy:deploy virtualenvs<br>
+                    $ sudo su deploy<br>
+                    $ cd virtualenvs<br>
+                    $ virtualenv --no-site-packages example-site<br>
+                    $ exit<br></code>
+            <li>Make location for the site</li>
+            <code>
+                    $ cd /srv/<br>
+                    $ sudo mkdir sites<br>
+                    $ sudo chown deploy:deploy sites<br>
+                    $ sudo su deploy<br>
+                    $ cd sites<br>
+                    $ git clone git://github.com/epicserve/django-base-site.git example-site<br>
+                    $ cd example-site/<br>
+                    $ git checkout -b example_site 5b05e2dbe5<br>
+                    $ echo `pwd` > /usr/local/virtualenvs/example-site/lib/python2.7/site-packages/django_project_root.pth<br>
+                    $ mkdir -p static/cache<br>
+                    $ exit<br>
+                    $ sudo chown www-data:www-data /srv/sites/example-site/static/cache<br>
+                    $ sudo su deploy<br>
+            </code>
+
+        </ul>
+        
+    </ol>
+{% endblock %}

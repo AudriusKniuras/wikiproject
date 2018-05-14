@@ -1,0 +1,66 @@
+<!DOCTYPE html> {% load staticfiles %}
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>WIKI Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <script src="main.js"></script> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'entryapp/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'entryapp/base.css' %}">
+    <script type="text/javascript" src="{% static 'entryapp/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'entryapp/jquery-3.3.js' %}"></script>
+    <script type="text/javascript" src="{% static 'entryapp/base.js' %}"></script>
+
+    {% block head_block %} {% endblock %}
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar Holder -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <a href="{% url 'index' %}">
+                    <h3>Wiki Project</h3>
+                </a>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="{% url 'aws' %}">AWS wiki</a>     
+                </li>
+                <li>
+                    <a href="{% url 'python' %}">Python wiki</a>  
+                </li>
+                <li>
+                    <a href="{% url 'network' %}">Networking wiki</a>
+                </li>
+                <li>
+                    <a href="{% url 'linux' %}">Linux wiki</a>
+                </li>
+                <li>
+                    <a href="{% url 'about' %}">About</a>
+                </li>               
+            </ul> 
+        </nav>
+        <!-- Page Content Holder -->
+        <div id="content">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                            <i class="glyphicon glyphicon-align-left"></i>
+                            <span>Toggle Sidebar</span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#">Page</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            {% block body_block %} {% endblock %}
+        </div>
+    </div>
+</body>
+</html>

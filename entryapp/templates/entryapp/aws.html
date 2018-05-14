@@ -1,0 +1,39 @@
+{% extends "entryapp/base.html" %} {% load staticfiles %}
+{% block body_block %} 
+    <h4>Initial Steps to configure AWS account</h4>
+    <ol>
+        <li>
+            <b>Creating Billing Alarms</b></li>
+        <ul>
+            <li>
+                Log in as a Root User
+            </li>
+            <li>
+                Allow billing alarms in user preferences
+            </li>
+            <li>
+                Use CloudWatch (Alarms>Billing) to set up the alarm and email list
+            </li>
+            <li>
+                Verify the alarm:
+                <img class="img-fluid" src="{% static "entryapp/alarmsetup.jpg" %}" alt="My image"/>
+            </li>
+        </ul>
+        
+        <li>
+            <b>Set up Administrative Account:</b>
+        </li>
+        <ul>
+            <li>
+                Create MFA for root user.
+            </li>
+            <li>
+                IAM -> Users -> Create new User
+            </li>
+            <li>
+                TODO: Complete setting up administrative account
+            </li>
+        </ul>
+    </ol>
+    <h4>Deploy Django website to EC2 instance</h4>
+{% endblock %}
